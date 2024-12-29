@@ -1,6 +1,23 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar/Navbar";
+import Provider from "./Provider"
+import { ClerkProvider } from "@clerk/nextjs";
+import { Taviraj } from 'next/font/google'
+import { Mali } from 'next/font/google'
+
+
+const taviraj = Taviraj({
+  weight:'400',
+  subsets:['latin', 'thai']
+})
+
+const mali = Mali({
+  weight:'400',
+  subsets:['latin', 'thai']
+})
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,12 +40,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+
+    <ClerkProvider>
+
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+        className={`${taviraj.className}`}
+        >
+        <Provider>
+
+          <Navbar />
+
+          <main className="container items-center ">
+          {children}
+          </main>
+
+        </Provider>
       </body>
     </html>
+        </ClerkProvider>
   );
 }
